@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.unittests1;
+package pva02.unittest1;
 
 public class EmpBusinessLogic {
     // Calculate the yearly salary of employee

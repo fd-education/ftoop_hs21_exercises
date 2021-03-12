@@ -1,5 +1,4 @@
-package ch.ffhs.ftoop.unittests1;
-
+package pva02.unittest1;
 
 public class EmployeeDetails {
 
@@ -36,7 +35,7 @@ public class EmployeeDetails {
      */
 
     public void setMonthlySalary(double monthlySalary) {
-        if (monthlySalary < 0) throw new NegativeSalaryException();
+        if (monthlySalary < 0) throw new NegativeSalaryException("Negative salary not allowed.");
         this.monthlySalary = monthlySalary;
     }
 
