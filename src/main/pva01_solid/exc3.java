@@ -1,5 +1,5 @@
 /**
- * SOLID principles: Excersize 3 - violates SOLIDs first principle (single
+ * SOLID principles: Exercise 3 - violates SOLIDs first principle (single
  * responsibility) The User Class creates posts and writes errors to files Two
  * different functionalities must be realised in two different classes
  */

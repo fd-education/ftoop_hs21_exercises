@@ -1,0 +1,12 @@
+image: maven_4-jdk-14
+
+stages:
+    - build
+
+maven-build:
+    stage: build
+    script: "mvn package"
+    artifacts:
+        reports:
+            junit:
+                - target/surefire-reports/TEST-*.xml

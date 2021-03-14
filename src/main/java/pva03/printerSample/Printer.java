@@ -1,15 +1,28 @@
-package ch.ffhs.ftoop.multithreading.printersample;
+package pva03.printerSample;
 
 class Printer implements Runnable {
 	private String message;
+	private static Object LOCK = new Object();
 
 	public Printer(String message) {
 		this.message = message;
 	}
 
 	public void run() {
-		for (int i = 0; i < 100; i++) {
-			System.out.println(i + ": " + message);
+		synchronized(LOCK) {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					for (int i = 0; i < 100; i++) {
+						System.out.println(i + ": " + message);
+
+						LOCK.notify();
+						LOCK.wait();
+					}
+					Thread.currentThread().interrupt();
+				} catch (InterruptedException iex) {
+					Thread.currentThread().interrupt();
+				}
+			}
 		}
 	}
 

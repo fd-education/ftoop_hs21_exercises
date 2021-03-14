@@ -1,5 +1,5 @@
 /**
- * SOLID principles: Excersize 2 - Violates SOLIDs fourth principle (Interface
+ * SOLID principles: Exercise 2 - Violates SOLIDs fourth principle (Interface
  * Segregation) A class should never be forced to implement functionallity that
  * it does not require, for the sake of having less interfaces. Keep interfaces
  * minimal!

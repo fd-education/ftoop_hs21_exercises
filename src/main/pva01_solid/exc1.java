@@ -1,5 +1,5 @@
 /**
- * SOLID principles: Excersize 1 - Violates SOLIDs third principle (Liskov)
+ * SOLID principles: Exercise 1 - Violates SOLIDs third principle (Liskov)
  * superclasses must be replaceable by any of their subclasses Subclasses must
  * therefore implement all of their superclasse's methods MentionPost does not
  * implement createPost
