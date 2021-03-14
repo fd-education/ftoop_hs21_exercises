@@ -4,7 +4,7 @@ variables:
                -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
                -Dmaven.repo.local=/cache/maven.repository"
 
-image: maven:3.6.3-openjdk-15
+image: maven:3.6.3-openjdk-15-slim
 
 stages:
     - build
