@@ -1,5 +1,5 @@
 /**
- * SOLID principles: Excersize 5 - violates the SOLIDs fifth principle
+ * SOLID principles: Exercise 5 - violates the SOLIDs fifth principle
  * (dependency inversion) If not absolutely necessary, we must avoid having
  * direct dependencies between concrete classes.
  */

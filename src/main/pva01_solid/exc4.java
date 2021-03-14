@@ -1,5 +1,5 @@
 /**
- * SOLID principles: Excersize 4 - Violates SOLIDs second principle (open/close)
+ * SOLID principles: Exercise 4 - Violates SOLIDs second principle (open/close)
  * A class must be open for extension, but closed for modification. In other
  * words extension must be possible, without the need of modifying an existing
  * class.
