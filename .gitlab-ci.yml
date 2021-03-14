@@ -1,4 +1,4 @@
-image: maven_3-jdk-8
+image: maven_4-jdk-14
 
 stages:
     - build
