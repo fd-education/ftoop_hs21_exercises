@@ -48,7 +48,7 @@ public class RealCustomerTest {
 
     @Test
     public void isNilTestNegative(){
-        assertFalse(uppercaseWithinName.isNil());
+        assertTrue(uppercaseWithinName.isNil());
         assertTrue(lowercaseName.isNil());
         assertTrue(numericName.isNil());
         assertTrue(numericLetterName.isNil());
