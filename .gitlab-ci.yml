@@ -14,7 +14,7 @@ maven-build:
     script: "mvn package"
     artifacts:
         paths:
-            - - target/surefire-reports/TEST-*.xml
+            - target/surefire-reports/TEST-*.xml
         reports:
             junit:
                 - target/surefire-reports/TEST-*.xml
