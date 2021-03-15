@@ -1,7 +1,7 @@
 package pva04.producerconsumer;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 /**
  * Simple storage implementation that stores and provides a single integer value
