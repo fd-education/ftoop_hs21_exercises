@@ -15,7 +15,7 @@ public class CounterPrinter {
 			System.exit(1);
 		}
 
-		Storage s = new Storage();
+		Storage s = null; // new Storage();
 		Printer d = new Printer(s);
 		Counter z = new Counter(s, Integer.parseInt(args[0]),
 				Integer.parseInt(args[1]));
