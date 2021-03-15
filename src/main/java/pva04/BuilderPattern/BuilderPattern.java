@@ -1,9 +1,10 @@
-package ch.ffhs.ftoop.builder;
+package pva04.BuilderPattern;
 
 public final class BuilderPattern {
 
     public static void main(String[] args) {
-        /* Der foolgende Code soll ohne Aenderungen lauffähig sein.
+
+        /* Der folgende Code soll ohne Aenderungen lauffähig sein.*/
         Meal healthyMeal = new Meal.Builder(Meal.Burger.VEGGIE)
                 .side(Meal.Side.SALAD)
                 .drink(Meal.Drink.WATER)
@@ -15,7 +16,8 @@ public final class BuilderPattern {
                 .baconTopping()
                 .ketchup()
                 .build();
-        */
+
+        System.out.println(unhealthyMeal.toString());
         /* [...] Remaining code omitted. */
     }
 }
