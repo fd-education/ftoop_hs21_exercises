@@ -58,16 +58,16 @@ public class Meal {
         {
             return new Meal(this);
         }
+    }
 
-        @Override
-        public String toString() {
-            return  "\nYour Meal: " +
-                    "\nBurger: " + burger +
-                    "\nSide: " + side +
-                    "\nDrink: " + drink +
-                    "\nKetchup: " + ketchup +
-                    "\nBacon Topping: " + baconTopping;
-        }
+    @Override
+    public String toString() {
+        return  "\nYour Meal: " +
+                "\nBurger: " + burger +
+                "\nSide: " + side +
+                "\nDrink: " + drink +
+                "\nKetchup: " + ketchup +
+                "\nBacon Topping: " + baconTopping;
     }
 
     public enum Burger {
