@@ -5,7 +5,7 @@ package pva04.nullObjectPattern;
  */
 public abstract class AbstractCustomer {
     /**
-     * Constraint: name must consist of strings that start with an uppercase letter and end with only lowercase letters
+     * Constraint: name must consist of strings that start with an uppercase letter and end with only lowercase letters <br>
      * Accepted separators are white space, - and '
     */
     protected static final String NAME_CHECK = "([A-Z][a-z]*)([\\s\\'-][A-Z][a-z]*)*";
