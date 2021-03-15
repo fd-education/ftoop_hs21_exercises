@@ -5,25 +5,25 @@ public interface StorageIf {
 	/**
 	 * Gibt den aktuellen Wert zurück.
 	 * 
-	 * @return
-	 * @throws InterruptedException
+	 * @return current value in the storage
+	 * @throws InterruptedException if thread is interrupted
 	 */
-	public int getValue() throws InterruptedException;
+	int getValue() throws InterruptedException;
 
 	/**
 	 * Setzt einen neuen aktuellen Wert.
-	 * 
-	 * @param value
-	 * @throws InterruptedException
+	 *
+	 * @param value value to set in the storage
+	 * @throws InterruptedException if thread is interrupted
 	 */
-	public void setValue(int value) throws InterruptedException;
+	void setValue(int value) throws InterruptedException;
 
 	/**
 	 * Gibt true zurück, wenn es einen neuen, noch nicht konsumierten Wert im
 	 * Objekt hat.
-	 * 
-	 * @return
+	 *
+	 * @return TRUE if storage contains a new value, FALSE else
 	 */
-	public boolean hasValue();
+	boolean hasValue();
 
 }
