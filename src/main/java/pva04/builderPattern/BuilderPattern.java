@@ -1,4 +1,4 @@
-package pva04.BuilderPattern;
+package pva04.builderPattern;
 
 public final class BuilderPattern {
 
@@ -17,5 +17,8 @@ public final class BuilderPattern {
                 .ketchup()
                 .build();
         /* [...] Remaining code omitted. */
+
+        System.out.println(healthyMeal.toString());
+        System.out.println(unhealthyMeal.toString());
     }
 }
