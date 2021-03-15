@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.multithreading.producerconsumer;
+package pva04.producerconsumer;
 
 import org.junit.Rule;
 import org.junit.Test;

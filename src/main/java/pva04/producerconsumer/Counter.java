@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.multithreading.producerconsumer;
+package pva04.producerconsumer;
 
 public class Counter extends Thread {
 
