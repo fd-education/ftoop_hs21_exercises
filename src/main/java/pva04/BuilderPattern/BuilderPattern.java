@@ -16,8 +16,6 @@ public final class BuilderPattern {
                 .baconTopping()
                 .ketchup()
                 .build();
-
-        System.out.println(unhealthyMeal.toString());
         /* [...] Remaining code omitted. */
     }
 }
