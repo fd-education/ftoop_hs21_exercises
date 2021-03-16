@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.multithreading.producerconsumer;
+package pva04.producerconsumer;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class CounterPrinter {
 			System.exit(1);
 		}
 
-		Storage s = null; // new Storage();
+		Storage s = new Storage();
 		Printer d = new Printer(s);
 		Counter z = new Counter(s, Integer.parseInt(args[0]),
 				Integer.parseInt(args[1]));
