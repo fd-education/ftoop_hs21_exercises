@@ -7,20 +7,10 @@ variables:
 image: maven:3.6.3-openjdk-15-slim
 
 stages:
-    - Validation
-    - Compilation
-    - Test
-
-maven-validate:
-    stage: Validation
-    script: "mvn $MAVEN_OPTS validate"
-
-maven-compile:
-    stage: Compilation
-    script: "mvn $MAVEN_OPTS compile"
+    - Unit Tests
 
 maven-test:
-    stage: Test
+    stage: Unit Tests
     script: "mvn $MAVEN_OPTS test"
     artifacts:
         paths:
