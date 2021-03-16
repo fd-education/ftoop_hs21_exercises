@@ -13,7 +13,7 @@ public class RedShapeDecorator extends ShapeDecorator {
      * @param shape Object of type ShapeIF
      */
     public RedShapeDecorator(ShapeIF shape){
-        super(Objects.requireNonNull(shape, "Shape must not be null"));
+        super(shape);
     }
 
     /**
