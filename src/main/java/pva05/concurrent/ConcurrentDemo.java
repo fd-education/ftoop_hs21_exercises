@@ -1,6 +1,7 @@
 package pva05.concurrent;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Exception wird geworfen, weil es nicht erlaubt ist, dass ein Thread über eine
@@ -8,7 +9,8 @@ import java.util.*;
  */
 
 class ConcurrentDemo extends Thread {
-    static ArrayList l = new ArrayList();
+    //static ArrayList l = new ArrayList();
+    static LinkedBlockingQueue<String> l = new LinkedBlockingQueue<>();
 
     public void run() {
         try {
