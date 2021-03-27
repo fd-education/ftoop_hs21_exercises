@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.multithreading.concurrent;
+package pva05.concurrent;
 
 import java.util.*;
 
