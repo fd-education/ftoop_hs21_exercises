@@ -7,14 +7,17 @@ variables:
 image: maven:3.6.3-openjdk-15-slim
 
 stages:
-    - build
+    - Unit Tests
 
-maven-build:
-    stage: build
-    script: "mvn package"
+maven-test:
+    stage: Unit Tests
+    script: "mvn $MAVEN_OPTS test"
     artifacts:
         paths:
             - target/surefire-reports/TEST-*.xml
         reports:
             junit:
                 - target/surefire-reports/TEST-*.xml
+
+
+

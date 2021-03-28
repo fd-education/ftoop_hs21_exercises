@@ -1,9 +1,16 @@
-package ch.ffhs.ftoop.multithreading.concurrent;
+package pva05.concurrent;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+
+/**
+ * Exception wird geworfen, weil es nicht erlaubt ist, dass ein Thread über eine
+ * Liste iteriert, während ein anderer gleichzeitig modifikationen daran vornimmt.
+ */
 
 class ConcurrentDemo extends Thread {
-    static ArrayList l = new ArrayList();
+    //static ArrayList l = new ArrayList();
+    static LinkedBlockingQueue<String> l = new LinkedBlockingQueue<>();
 
     public void run() {
         try {
@@ -18,8 +25,7 @@ class ConcurrentDemo extends Thread {
         l.add("D");
     }
 
-    public static void main(String[] args)
-            throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         l.add("A");
         l.add("B");
         l.add("c");
