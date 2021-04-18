@@ -15,14 +15,10 @@ public class CalculateDivisorTest {
     @Test
     public void testCalculate() throws Exception {
         final long start = System.currentTimeMillis();
-//        assertEquals(
-//                "Ergebnis: Zahl mit maximaler Anzahl Divisoren: 7560 (64 Divisoren)\n",
-//                tapSystemOutNormalized(() -> CalculateDivisor.main(new String[]{"10", "10000", "4"})));
-
-
         assertEquals(
-                "Ergebnis: Zahl mit maximaler Anzahl Divisoren: 720720 (240 Divisoren)\n",
-                tapSystemOutNormalized(() -> CalculateDivisor.main(new String[]{"10", "1000000", "12"})));
+                "Ergebnis: Zahl mit maximaler Anzahl Divisoren: 7560 (64 Divisoren)\n",
+                tapSystemOutNormalized(() -> CalculateDivisor.main(new String[]{"10", "10000", "4"})));
+
         System.out.println(System.currentTimeMillis() - start);
 
     }
