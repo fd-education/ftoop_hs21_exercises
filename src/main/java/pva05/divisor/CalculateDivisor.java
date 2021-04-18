@@ -1,10 +1,9 @@
-package ch.ffhs.ftoop.multithreading.divisor;
+package pva05.divisor;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.*;
 
 /**
  * Das folgende Programm soll aus einem vorgegebene Interval von Long-Zahlen die
@@ -47,10 +46,32 @@ public class CalculateDivisor {
 	 * @throws ExecutionException
 	 */
 	DivisorResult calculate() throws InterruptedException, ExecutionException {
+		final ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 
-		// TODO implementieren Sie hier die Logic der calculate Methode
+		final HashMap<Long, Future<Long>> futureMap = new HashMap<>();
 
-		return new DivisorResult(0, 0);
+		for (long i = von; i <= bis; i++) {
+			final Future<Long> future = executorService.submit(new DivisorCountCalculator(i));
+			futureMap.put(i, future);
+		}
+
+		long maxDivisorCountValue = Long.MAX_VALUE;
+		long maxDivisorCount = Long.MIN_VALUE;
+
+		for (Entry<Long, Future<Long>> entry : futureMap.entrySet()) {
+			Long index = entry.getKey();
+			Future<Long> future = entry.getValue();
+			long divisorCount = future.get();
+
+			if (divisorCount >= maxDivisorCount) {
+				if (!(divisorCount == maxDivisorCount && index > maxDivisorCountValue)) {
+					maxDivisorCountValue = index;
+				}
+				maxDivisorCount = divisorCount;
+			}
+		}
+
+		return new DivisorResult(maxDivisorCountValue, maxDivisorCount);
 	}
 
 	public static void main(String[] args) throws InterruptedException,
@@ -70,37 +91,5 @@ public class CalculateDivisor {
 
 }
 
-/**
- * Hält das Ergebnis einer Berechnung
- * 
- * @author bele
- * 
- * 
- */
-class DivisorResult {
-	// das eigentlich ergebnis - die Zahl mit der max. Anzahl von Divisoren
-	long result;
 
-	// Anzahl der Divisoren von Result
-	long countDiv;
 
-	public DivisorResult(long r, long c) {
-		result = r;
-		countDiv = c;
-	}
-
-	public long getResult() {
-		return result;
-	}
-
-	public long getCountDiv() {
-		return countDiv;
-	}
-
-	@Override
-	public String toString() {
-		return "Zahl mit maximaler Anzahl Divisoren: " + result + " ("
-				+ countDiv + " Divisoren)";
-	}
-
-}

@@ -9,6 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 
 class ConcurrentDemo extends Thread {
+
     //static ArrayList l = new ArrayList();
     static LinkedBlockingQueue<String> l = new LinkedBlockingQueue<>();
 
