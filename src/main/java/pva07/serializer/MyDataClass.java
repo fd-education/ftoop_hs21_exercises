@@ -1,4 +1,4 @@
-package ch.ffhs.ftoop.serializer;
+package pva07.serializer;
 
 public final class MyDataClass {
 
@@ -8,7 +8,7 @@ public final class MyDataClass {
 
     private String stringField;
 
-    //@DoNotSerialize
+    @DoNotSerialize
     private double pi
             = 3.14159;
 
