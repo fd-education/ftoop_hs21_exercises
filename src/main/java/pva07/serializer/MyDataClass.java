@@ -9,8 +9,7 @@ public final class MyDataClass {
     private String stringField;
 
     @DoNotSerialize
-    private double pi
-            = 3.14159;
+    private double pi = 3.14159;
 
     public MyDataClass(boolean booleanField, int intField, String stringField) {
         this.booleanField = booleanField;
