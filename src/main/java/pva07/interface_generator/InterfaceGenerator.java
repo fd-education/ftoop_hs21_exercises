@@ -1,23 +1,53 @@
 package pva07.interface_generator;
 
-public class InterfaceGenerator{ //implements Generator<Interface> {
+import java.io.IOException;
+
+public class InterfaceGenerator{
+    static Interface iFace;
+
     public static void main(String[] args) {
-        try {
-            String input = InputHandler.getInput();
-            Class<?> clazz = Class.forName(input);
-            generate(clazz);
-        } catch(ClassNotFoundException ex){
-            System.out.println(ex);
-        }
+        controlFlow();
     }
 
-    //@Override  pva07.interface_generator.Interface
-    public static Interface generate(Class<?> clazz){
-        Interface iFace = new Interface(clazz.getPackageName() ,clazz.getSimpleName(), clazz.getName(), ReflectionUtils.getInterfaceMethods(clazz));
+    private static void controlFlow(){
+        boolean running = true;
 
-        FileCreator.writeFile(iFace.getPath(), iFace.toString());
+        while(running){
+            String userInput = getUserInput();
+            if(userInput.equalsIgnoreCase("X")) running = false;
+            if(userInput.isBlank()) continue;
 
-        System.out.println(iFace);
-        return iFace;
+            try{
+                Class<?> clazz = Class.forName(userInput);
+                System.out.println(clazz);
+                iFace = new Interface(clazz);
+
+                iFace.generate(new FileCreator());
+
+                System.out.println(iFace);
+                System.out.println("Created interface at: " + iFace.getPath());
+
+            } catch(ClassNotFoundException cnfEx){
+                System.out.println("No class matched your input.");
+            } catch(IllegalArgumentException iaEx){
+                System.out.println("Please enter a valid classname");
+            } catch(IOException ioEx){
+                System.out.println("File could not be written to " + iFace.getPath());
+            }
+        }
+
+    }
+
+    private static String getUserInput(){
+        InputHandler inputHandler = new InputHandler();
+
+        try {
+            System.out.println("\nEnter a classname to generate an interface or 'X' to quit:");
+            return inputHandler.getInput();
+
+        } catch(IllegalArgumentException iag){
+            System.out.println("Please provide a valid java classname");
+            return "";
+        }
     }
 }

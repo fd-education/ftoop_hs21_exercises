@@ -6,23 +6,20 @@ public class InputHandler {
 
     public InputHandler(){}
 
-    public static String getInput() throws IllegalArgumentException{
+    public String getInput() throws IllegalArgumentException{
         return scanInput();
     }
 
-    private static String scanInput() throws IllegalArgumentException{
+    private String scanInput() throws IllegalArgumentException{
+
         Scanner scn = new Scanner(System.in);
-        String input = "";
-
-        input += scn.nextLine();
-
-        scn.close();
-
+        String input = scn.nextLine();
         validateInput(input);
+
         return input;
     }
 
-    private static void validateInput(String input) throws IllegalArgumentException{
+    private void validateInput(String input) throws IllegalArgumentException{
         String[] inputSplit = input.split("\\.");
         String className = inputSplit[inputSplit.length - 1];
 

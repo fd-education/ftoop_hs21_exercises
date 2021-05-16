@@ -4,13 +4,13 @@ import java.io.*;
 
 public class FileCreator {
 
-    public static void writeFile(String path, String content){
-        try{
-            FileWriter writer = new FileWriter(path);
-            writer.write(content);
-            writer.close();
-        } catch(IOException ex){
-            System.out.println(ex);
-        }
+    public FileCreator(){}
+
+    public void writeFile(String path, String content) throws IOException{
+        final FileWriter writer;
+
+        writer = new FileWriter(path);
+        writer.write(content);
+        writer.close();
     }
 }
