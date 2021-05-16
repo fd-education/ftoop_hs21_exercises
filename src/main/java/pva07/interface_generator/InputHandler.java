@@ -3,28 +3,24 @@ package pva07.interface_generator;
 import java.util.Scanner;
 
 public class InputHandler {
+    private Scanner scn;
 
-    public InputHandler(){}
-
-    public String getInput() throws IllegalArgumentException{
-        return scanInput();
+    public InputHandler(){
+        scn = new Scanner(System.in);
     }
 
-    private String scanInput() throws IllegalArgumentException{
-
-        Scanner scn = new Scanner(System.in);
-        String input = scn.nextLine();
-        validateInput(input);
-
-        return input;
+    /**
+     * Read one line of user input
+     * @return user input
+     */
+    public String getInput(){
+        return scn.nextLine();
     }
 
-    private void validateInput(String input) throws IllegalArgumentException{
-        String[] inputSplit = input.split("\\.");
-        String className = inputSplit[inputSplit.length - 1];
-
-        if(!className.matches("[A-Za-z]*")){
-            throw new IllegalArgumentException("Provide a valid classname");
-        }
+    /**
+     * Cleanup: close the scanner
+     */
+    public void closeScanner(){
+        scn.close();
     }
 }

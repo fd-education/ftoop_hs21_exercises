@@ -1,13 +1,19 @@
 package pva07.interface_generator;
 
-
 import java.lang.reflect.*;
 import java.util.ArrayList;
 
 public class ReflectionUtils {
 
+    // Private constructor because a Utility Class may not be instantiated
     private ReflectionUtils(){}
 
+    /**
+     * Extract only public methods that are part of the class.
+     * Ignore overridden methods
+     * @param clazz Class reflection
+     * @return methods to put into an interface
+     */
     public static Method[] getInterfaceMethods(Class<?> clazz){
         ArrayList<Method> publClassMethods = new ArrayList<>();
 
@@ -19,23 +25,27 @@ public class ReflectionUtils {
         return publClassMethods.toArray(methods);
     }
 
+    // Check if a methods is public and not a method of a super class
     private static boolean isInterfaceMethod(Method method, Class<?> clazz){
-        return hasPublicVisibility(method) && !isBaseMethod(method, clazz);
+        return hasPublicVisibility(method) && !isOverrideMethod(method, clazz);
     }
 
+    // Check if the modifier is "public"
     private static boolean hasPublicVisibility(Method method){
         return Modifier.isPublic(method.getModifiers());
     }
 
-    private static boolean isBaseMethod(Method method, Class<?> clazz){
+    // Check if the method is overriding a base method
+    private static boolean isOverrideMethod(Method method, Class<?> clazz){
         Method[] baseMethods = clazz.getSuperclass().getDeclaredMethods();
 
+        // Check for abstract classes and other super classes
         for(Method baseMethod: baseMethods){
             if(method.getName().equals(baseMethod.getName())) return true;
         }
 
+        // Check for interface methods
         Class<?>[] iFaces = clazz.getInterfaces();
-
         for(Class<?> iFace: iFaces){
             Method[] iMethods = iFace.getMethods();
 

@@ -3,32 +3,35 @@ package pva07.interface_generator;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 
+/**
+ * Class to represent a Java Interface
+ */
 @Getter
 public class Interface implements Generator<Interface>{
-    private  final String path;
-    private  final String packageName;
-    private  final String simpleName;
+    private final String path;
+    private final String packageName;
+    private final String simpleName;
     private final Method[] methods;
     private final String[] imports;
 
-    public Interface(Class<?> clazz) throws IllegalStateException{
+    public Interface(Class<?> clazz){
         this.packageName = clazz.getPackageName();
         this.simpleName = clazz.getSimpleName() + "If";
         this.methods = ReflectionUtils.getInterfaceMethods(clazz);
-        this.imports = getTypeImports(ReflectionUtils.getInterfaceMethods(clazz));
+        this.imports = detectImports(ReflectionUtils.getInterfaceMethods(clazz));
         this.path = createPath(clazz.getName());
-
-        getTypeImports(this.methods);
     }
 
+    /**
+     * Gives back a String representation of an Interface
+     * @return String containing a working interface
+     */
     @Override
     public String toString(){
-
         return  "package " + packageName + ";\n"
                 + "\n"
                 + importsToString()
@@ -36,17 +39,80 @@ public class Interface implements Generator<Interface>{
                 +"public interface " + simpleName + " {\n"
                 + methodsToString()
                 + "}";
-
     }
 
+    /**
+     * Create a working java interface at the location of its corresponding class.
+     * @param fileCreator fileCreator object
+     * @return a representation of the interface just written to a file
+     * @throws IOException if file cannot be written
+     */
     @Override
     public Interface generate(FileCreator fileCreator) throws IOException {
         fileCreator.writeFile(this.path, this.toString());
         return this;
     }
 
+    // Create a path to the location of the class, that will act as the interfaces location
+    private String createPath(String className){
+        String path = String.format("src\\main\\java\\%sIf.java", className.replace(".", "\\"));
+
+        return FileSystems.getDefault().getPath(path).toAbsolutePath().toString();
+    }
+
+    // Detect complex data types, that are required to be imported before usage
+    private String[] detectImports(Method[] methods){
+        ArrayList<String> types = new ArrayList<>();
+
+        for(Method method: methods){
+
+            // Detect complex return types
+            Class<?> returnType = method.getReturnType();
+            if(complexAndNotExisting(returnType, types)) types.add(getPackageName(returnType));
+
+            // Detect complex parameter types
+            Parameter[] params = method.getParameters();
+            for(Parameter param: params){
+                Class<?> paramType = param.getType();
+
+                if(complexAndNotExisting(paramType, types)) types.add(getPackageName(paramType));
+            }
+
+            // Detect exceptions to be imported
+            Class<?>[] exceptions = method.getExceptionTypes();
+            for(Class<?> exceptionType: exceptions){
+                if(complexAndNotExisting(exceptionType, types)) types.add(getPackageName(exceptionType));
+            }
+        }
+
+        String[] typeImports = new String[types.size()];
+        return types.toArray(typeImports);
+    }
+
+    // Returns true, if a provided datatype is complex and not already part of an import list
+    private boolean complexAndNotExisting(Class<?> type, ArrayList<String> types){
+        return !type.isPrimitive() && !types.contains(getPackageName(type));
+    }
+
+    // Create an importable package name
+    private String getPackageName(Class<?> type){
+        return String.format("%s.%s", type.getPackageName(), type.getSimpleName().replaceAll("(<.*>)|(\\[])", ""));
+    }
+
+    // Create a String representation of a classes imports
+    private String importsToString(){
+        StringBuilder importStatements = new StringBuilder();
+
+        for(String imp : imports){
+            importStatements.append(String.format("import %s;\n", imp));
+        }
+
+        return importStatements.toString();
+    }
+
+    // Create a String representation of class methods
     private String methodsToString(){
-        String interfaceMethods = "";
+        StringBuilder methodString = new StringBuilder();
 
         for(Method method : methods){
             String returnType = method.getReturnType().getSimpleName();
@@ -56,105 +122,53 @@ public class Interface implements Generator<Interface>{
 
             Parameter[] params = method.getParameters();
 
-            interfaceMethods += "\t" + returnType + " " + methodName + "("+ paramsToString(params) + ")" + exceptionsToString(exceptions) + ";\n";
+            methodString.append(String.format("\t%s %s (%s) %s;\n", returnType, methodName, parameterListToString(params), exceptionsToString(exceptions)));
         }
 
-        return interfaceMethods;
+        return methodString.toString();
     }
 
-    private String importsToString(){
-        String importStatements = "";
+    // Create a String representation of methods parameter list
+    private String parameterListToString(Parameter[] params){
+        StringBuilder paramString = new StringBuilder();
 
-        for(String i : imports){
-            importStatements += "import " + i + ";\n";
-        }
-
-        return importStatements;
-    }
-
-    private String paramsToString(Parameter[] params){
         if(params.length > 0) {
-            String paramString = "";
             for (int i = 0; i < params.length - 1; i++) {
-                paramString += paramToString(params[i]) + ", ";
-
+                paramString.append(String.format("%s, ", parameterToString(params[i])));
             }
-            paramString += paramToString(params[params.length - 1]);
 
-            System.out.println(paramString);
-            return paramString;
+            paramString.append(parameterToString(params[params.length - 1]));
         }
 
-        return "";
+        return paramString.toString();
     }
 
-    private String createPath(String className){
-        String pathPrefix = "src/main/java";
-        final String pathPostfix = "\\" + className.replace(".", "\\") + "If.java";
+    // Create a String representation of a single parameter
+    private String parameterToString(Parameter param){
+        String fullType = param.getParameterizedType().getTypeName();
+        String[] typeSplit = fullType.split("\\.");
 
-        return FileSystems.getDefault().getPath(pathPrefix + pathPostfix).toAbsolutePath().toString();
+        String type = typeSplit.length  > 0 ? typeSplit[typeSplit.length - 1] : fullType;
+
+        return String.format("%s %s", type, param.getName());
     }
 
-    private String[] getTypeImports(Method[] methods){
-        ArrayList<String> types = new ArrayList<>();
-
-        for(Method method: methods){
-            Class<?> returnType = method.getReturnType();
-
-            if(complexAndNotExisting(returnType, types)) types.add(typeToString(returnType));
-
-            Class<?>[] exceptions = method.getExceptionTypes();
-            for(Class<?> exceptionType: exceptions){
-                if(complexAndNotExisting(exceptionType, types)) types.add(typeToString(exceptionType));
-            }
-
-            Parameter[] params = method.getParameters();
-            for(Parameter param: params){
-                Class<?> paramType = param.getType();
-
-                if(complexAndNotExisting(paramType, types)) types.add(typeToString(paramType));
-            }
-        }
-
-        String[] typeImports = new String[types.size()];
-        return types.toArray(typeImports);
-    }
-
-    private boolean complexAndNotExisting(Class<?> type, ArrayList<String> types){
-        return !type.isPrimitive() && !types.contains(typeToString(type));
-    }
-
-    private String typeToString(Class<?> type){
-        return type.getPackageName() + "." +  type.getSimpleName().replaceAll("(<.*>)|(\\[\\])", "");
-    }
-
-    private String paramToString(Parameter param){
-        String[] typeSplit = param.getParameterizedType().getTypeName().split("\\.");
-
-        String type = typeSplit.length  > 0 ? typeSplit[typeSplit.length - 1] : typeSplit[0];
-
-        System.out.println(type + " " + param.getName());
-
-        return type + " " + param.getName();
-    }
-
+    // Create a String representation of exceptions
     private String exceptionsToString(Class<?>[] exceptions){
+        StringBuilder exception = new StringBuilder();
 
         if(exceptions.length > 1) {
-            String exceptionString = " throws ";
+            exception.append("throws");
 
             for (int i = 0; i < exceptions.length - 1; i++) {
-                exceptionString += exceptions[i].getSimpleName() + ", ";
+                exception.append(String.format("%s,", exceptions[i].getSimpleName()));
             }
+            return exception.append(String.format("%s;", exceptions[exceptions.length - 1].getSimpleName())).toString();
 
-            exceptionString += exceptions[exceptions.length - 1].getSimpleName();
-
-            return exceptionString;
         } else if(exceptions.length == 1){
-            return " throws " + exceptions[0].getSimpleName();
+            return exception.append(String.format("throws %s", exceptions[0].getSimpleName())).toString();
         } else {
-            return "";
+            return exception.toString();
         }
-
     }
 }
