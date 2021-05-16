@@ -13,11 +13,12 @@ public class InterfaceGenerator{
         boolean running = true;
 
         while(running){
-            String userInput = getUserInput();
-            if(userInput.equalsIgnoreCase("X")) running = false;
-            if(userInput.isBlank()) continue;
 
             try{
+                String userInput = getUserInput();
+                if(userInput.equalsIgnoreCase("X")) running = false;
+                if(userInput.isBlank()) continue;
+
                 Class<?> clazz = Class.forName(userInput);
                 System.out.println(clazz);
                 iFace = new Interface(clazz);
@@ -30,7 +31,7 @@ public class InterfaceGenerator{
             } catch(ClassNotFoundException cnfEx){
                 System.out.println("No class matched your input.");
             } catch(IllegalArgumentException iaEx){
-                System.out.println("Please enter a valid classname");
+                System.out.println("\nPlease enter a valid classname");
             } catch(IOException ioEx){
                 System.out.println("File could not be written to " + iFace.getPath());
             }
@@ -38,16 +39,11 @@ public class InterfaceGenerator{
 
     }
 
+    //
     private static String getUserInput(){
         InputHandler inputHandler = new InputHandler();
 
-        try {
-            System.out.println("\nEnter a classname to generate an interface or 'X' to quit:");
-            return inputHandler.getInput();
-
-        } catch(IllegalArgumentException iag){
-            System.out.println("Please provide a valid java classname");
-            return "";
-        }
+        System.out.println("\nEnter a classname to generate an interface or 'X' to quit:");
+        return inputHandler.getInput();
     }
 }

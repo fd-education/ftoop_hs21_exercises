@@ -56,7 +56,7 @@ public class Interface implements Generator<Interface>{
 
             Parameter[] params = method.getParameters();
 
-            interfaceMethods += returnType + " " + methodName + "("+ paramsToString(params) + ")" + exceptionsToString(exceptions) + ";\n";
+            interfaceMethods += "\t" + returnType + " " + methodName + "("+ paramsToString(params) + ")" + exceptionsToString(exceptions) + ";\n";
         }
 
         return interfaceMethods;
