@@ -15,18 +15,15 @@ public class InterfaceGenerator{
 
     // Orchestrator method for interface creation
     private static void controlFlow(){
-        boolean running = true;
 
-        while(running){
+        while(true){
 
             try{
                 String userInput = getUserInput();
 
-                // Handle special inputs (quit or empty string)
-                if(userInput.equalsIgnoreCase("X")){
-                    running = false;
-                    continue;
-                }
+                // Terminate if user enters 'X'
+                if(userInput.equalsIgnoreCase("X")) break;
+                // Skip logic if user enters an empty string
                 if(userInput.isBlank()) continue;
 
                 // Use Class reflection to instantiate Interface object
@@ -60,7 +57,7 @@ public class InterfaceGenerator{
         return className;
     }
 
-    // Cleanup after before program exits
+    // Cleanup before program exits
     private static void cleanup(){
         inputHandler.closeScanner();
     }

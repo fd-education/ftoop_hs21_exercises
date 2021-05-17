@@ -9,7 +9,7 @@ public class ReflectionUtils {
     private ReflectionUtils(){}
 
     /**
-     * Extract only public methods that are part of the class.
+     * Only extract the public methods that are part of the class.
      * Ignore overridden methods
      * @param clazz Class reflection
      * @return methods to put into an interface
