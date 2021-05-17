@@ -3,7 +3,7 @@ package pva07.interface_generator;
 import java.util.Scanner;
 
 public class InputHandler {
-    private Scanner scn;
+    private final Scanner scn;
 
     public InputHandler(){
         scn = new Scanner(System.in);
