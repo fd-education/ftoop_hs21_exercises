@@ -52,9 +52,7 @@ public class InterfaceGenerator{
 
         inputHandler = new InputHandler();
 
-        String className = inputHandler.getInput();
-
-        return className;
+        return inputHandler.getInput();
     }
 
     // Cleanup before program exits
