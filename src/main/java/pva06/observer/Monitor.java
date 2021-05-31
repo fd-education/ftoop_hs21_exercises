@@ -4,6 +4,7 @@ public class Monitor implements ObserverI{
     private Subject subject;
 
     public Monitor(){};
+
     public Monitor(Subject subject) {
         this.subject = subject;
         subject.addObserver(this);
